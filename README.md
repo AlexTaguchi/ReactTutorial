@@ -1,5 +1,6 @@
 # ReactTutorial
 Simple example of building a one page React website
+---
 
 Create a new React project
 ```
@@ -53,7 +54,7 @@ Here we will only make changes to the component structure (STEP 2)
 
 What are components? They are small blocks of code responsible for rendering specific sections of the DOM. Components are organized in a tree-like structure, where the master component that encompasses the entire DOM forms the trunk of the tree. All other components branch out from the master component. In the above case the "Welcome" class is our master component, because it is rendered at the root of the DOM in STEP 3.
 
-In order to communicate with eachother, components receive information from their parent (root) components and pass down information to their child (branch) components in the form of properties, or "props". Therefore, components normally require two methods: A "constructor" method to construct the component based on the props received from the parents, and a "render" method to display the constructed component (since the "Welcome" class is the master component and doesn't receive any props, it doesn't need a "constructor" method).
+In order to communicate with eachother, components receive information from their parent (root) components and pass information down to their child (branch) components in the form of properties, or "props". Therefore, components normally require two methods: A "constructor" method to construct the component based on the props received from the parents, and a "render" method to display the constructed component. Since the "Welcome" class is the master component and doesn't receive any props, it doesn't need a "constructor" method.
 
 Let's make our first child component, which will display the name of the website's author. Add the following below the "Welcome" class
 ```jsx
@@ -82,7 +83,7 @@ class Welcome extends React.Component {
   }
 }
 ```
-Note that we passed down 'Alex Taguchi' as a prop to the "Author" class. The constructor of "Author" took props, and the "super(props)" calls React.Component to handle it. React.Component automatically converts the props into an attribute that can be readily accessed as "this.props.name", where the attribute is called "name", because that's the name with which we passed it down from "Welcome" (<Author name='Alex Taguchi' />).
+We passed down 'Alex Taguchi' as a prop to the "Author" class. The constructor of "Author" receives the props, and the "super(props)" calls React.Component to take care of it. React.Component automatically converts the props into an attribute accessible as "this.props.name" (it's called "name", because that's how it was passed down from "Welcome".
 
 What if we want to create a component attribute that's different than the props it receives? These attributes are called "states" and may or may not depend on the props. Let's make a component that (1) is a child of "Welcome", (2) doesn't rely on any props from "Welcome", and (3) creates its own state attribute to disply the time the webpage was opened
 ```jsx
@@ -113,7 +114,7 @@ class Welcome extends React.Component {
   }
 }
 ```
-Note that even though we don't receive any props, we still need to write out the constructor method. The constructor method is still required to create the state attributes.
+Even though "Time" doesn't receive any props, we still need to write out the constructor method. The constructor method is still required to create the state attributes.
 
 All of the components we've written thus far are static. If we want to make a component dynamic, we need to give it additional methods to change its state attributes. Let's make another component that dynamically displays the time
 ```jsx
@@ -175,7 +176,7 @@ class Math extends React.Component {
 ```
 (Add "Math" to "Welcome" like before)
 
-"Math" doesn't receieve any props, and initializes with two state attributes "x" and "y". Two event handler functions "changeX" and "changeY" dynamically update the values of x and y. We have to bind "this" to the event handlers, because they're used as callback functions. Rember that callback functions continue to run even after their parent event handling function has finished (let loose to run asynchronously), and therefore callbacks lose their memory of what "this" is (closure). The event we are monitoring is "onChange", so everytime the user changes the value, it gets updated in the states attribute, and passed to "Sum"
+"Math" doesn't receieve any props, and initializes with two state attributes "x" and "y". Two event handler functions "changeX" and "changeY" dynamically update the values of x and y. We have to bind "this" to the event handlers, because they're used as callback functions. Rember that callback functions continue to run even after their parent event handling function has finished (they are let loose to run asynchronously), and therefore callbacks lose their memory of what "this" is (closure). The event we are monitoring is "onChange", so everytime the user changes the value, it gets updated in the states attribute, and passed to "Sum"
 ```jsx
 class Sum extends React.Component {
   constructor(props) {
