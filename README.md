@@ -52,9 +52,9 @@ Creating a React app can be boiled down into three steps:
 
 Here we will only make changes to the component structure (STEP 2)
 
-What are components? They are small blocks of code responsible for rendering specific sections of the DOM. Components are organized in a tree-like structure, where the master component that encompasses the entire DOM forms the trunk of the tree. All other components branch out from the master component. In the above case the "Welcome" class is our master component, because it is rendered at the root of the DOM in STEP 3.
+What are components? They are small blocks of code responsible for rendering specific sections of the DOM. Components are organized into a tree-like structure, where the master component that encompasses the entire DOM forms the trunk of the tree. All other components branch out from the master component. In the above case the "Welcome" class is our master component, because it is rendered at the root of the DOM in STEP 3.
 
-In order to communicate with eachother, components receive information from their parent (root) components and pass information down to their child (branch) components in the form of properties, or "props". Therefore, components normally require two methods: A "constructor" method to construct the component based on the props received from the parents, and a "render" method to display the constructed component. Since the "Welcome" class is the master component and doesn't receive any props, it doesn't need a "constructor" method.
+In order to communicate with each other, components receive information from their parent (root) components and pass information down to their child (branch) components in the form of properties, or "props". Therefore, components normally require two methods: A "constructor" method to construct the component based on the props received from the parents, and a "render" method to display the constructed component. Since the "Welcome" class is the master component and doesn't receive any props, it doesn't need a "constructor" method.
 
 Let's make our first child component, which will display the name of the website's author. Add the following below the "Welcome" class
 ```jsx
