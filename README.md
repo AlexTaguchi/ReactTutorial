@@ -134,11 +134,11 @@ class Clock extends React.Component {
   }
 }
 ```
-(Add "<Clock />" to "Welcome" like before)
+(Add "Clock" to "Welcome" like before)
 
 componentDidMount() is a special method that runs whenever the component renders something onto the DOM. Thus, as soon as the time is posted, this function will wait one second before changing the date attribute. Changing the date attribute therefore updates the DOM, so componentDidMount() will fire again, continuing the cycle.
 
-Finally, let's actively pass information from one component to another, and have it update the child component's behavior in real time. In this case we will create a "Math" component that has two form fields, which will be passed to a "Sum" component to display the sum of the numbers
+Finally, let's actively pass information from one component to another, and have it update the child component's behavior in real time. In this case we will create a "Math" component that has two form fields, which will later be passed to a "Sum" component to display the sum of the numbers
 ```jsx
 class Math extends React.Component {
   constructor(props) {
@@ -172,7 +172,11 @@ class Math extends React.Component {
     );
   }
 }
+```
+(Add "Math" to "Welcome" like before)
 
+"Math" doesn't receieve any props, and initializes with two state attributes "x" and "y". Two event handler functions "changeX" and "changeY" dynamically update the values of x and y. We have to bind "this" to the event handlers, because they're used as callback functions. Rember that callback functions continue to run even after their parent event handling function has finished (let loose to run asynchronously), and therefore callbacks lose their memory of what "this" is (closure). The event we are monitoring is "onChange", so everytime the user changes the value, it gets updated in the states attribute, and passed to "Sum"
+```jsx
 class Sum extends React.Component {
   constructor(props) {
     super(props);
@@ -190,6 +194,4 @@ class Sum extends React.Component {
   }
 }
 ```
-(Add "<Math />" to "Welcome" like before)
-
-Ok maybe that was a pretty big step forward, but we'll walk through it.
+Note the use of an if clause here. Only compute and display the sum if both form fields are filled. Otherwise display nothing.
