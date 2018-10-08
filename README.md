@@ -83,3 +83,113 @@ class Welcome extends React.Component {
 }
 ```
 Note that we passed down 'Alex Taguchi' as a prop to the "Author" class. The constructor of "Author" took props, and the "super(props)" calls React.Component to handle it. React.Component automatically converts the props into an attribute that can be readily accessed as "this.props.name", where the attribute is called "name", because that's the name with which we passed it down from "Welcome" (<Author name='Alex Taguchi' />).
+
+What if we want to create a component attribute that's different than the props it receives? These attributes are called "states" and may or may not depend on the props. Let's make a component that (1) is a child of "Welcome", (2) doesn't rely on any props from "Welcome", and (3) creates its own state attribute to disply the time the webpage was opened
+```jsx
+class Time extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+
+  render() {
+    return (
+      <div>You visited at {this.state.date.toLocaleTimeString()}</div>
+    )
+  }
+}
+```
+(Update "Welcome" as follows)
+```jsx
+class Welcome extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Welcome!</h1>
+        <Author name='Alex Taguchi' />
+        <Time />
+      </div>
+    )
+  }
+}
+```
+Note that even though we don't receive any props, we still need to write out the constructor method. The constructor method is still required to create the state attributes.
+
+All of the components we've written thus far are static. If we want to make a component dynamic, we need to give it additional methods to change its state attributes. Let's make another component that dynamically displays the time
+```jsx
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+
+  componentDidMount() {
+    setInterval( () => this.setState({date: new Date()}), 1000);
+  }
+
+  render() {
+    return (
+      <div>The time is {this.state.date.toLocaleTimeString()}</div>
+    )
+  }
+}
+```
+(Add "<Clock />" to "Welcome" like before)
+
+componentDidMount() is a special method that runs whenever the component renders something onto the DOM. Thus, as soon as the time is posted, this function will wait one second before changing the date attribute. Changing the date attribute therefore updates the DOM, so componentDidMount() will fire again, continuing the cycle.
+
+Finally, let's actively pass information from one component to another, and have it update the child component's behavior in real time. In this case we will create a "Math" component that has two form fields, which will be passed to a "Sum" component to display the sum of the numbers
+```jsx
+class Math extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {x: '', y: ''};
+    this.changeX = this.changeX.bind(this)
+    this.changeY = this.changeY.bind(this)
+  }
+
+  changeX(event) {
+    this.setState({x: event.target.value});
+  }
+
+  changeY(event) {
+    this.setState({y: event.target.value});
+  }
+
+  render() {
+    return (
+        <div>
+          <div>
+            First number:
+            <input type="text" value={this.state.x} onChange={this.changeX} />
+          </div>
+          <div>
+            Second number:
+            <input type="text" value={this.state.y} onChange={this.changeY} />
+          </div>
+          <Sum numbers={this.state} />
+        </div>
+    );
+  }
+}
+
+class Sum extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    if (Number(this.props.numbers.x) && Number(this.props.numbers.y)) {
+      return (
+        <div>
+          {Number(this.props.numbers.x) + Number(this.props.numbers.y)}
+        </div>
+      )
+    }
+    else {return null}
+  }
+}
+```
+(Add "<Math />" to "Welcome" like before)
+
+Ok maybe that was a pretty big step forward, but we'll walk through it.
