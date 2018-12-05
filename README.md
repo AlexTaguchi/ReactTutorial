@@ -1,4 +1,4 @@
-# ReactTutorial
+# react-notes
 Simple example of building a one page React website
 ---
 
